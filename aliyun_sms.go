@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/goroom/rand"
+	_ "github.com/goroom/rand"
 )
 
 type AliyunSms struct {
