@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/goroom/rand"
-	_ "github.com/goroom/rand"
+	rd "github.com/goroom/rand"
 )
 
 type AliyunSms struct {
@@ -31,6 +31,7 @@ func NewAliyunSms(sign_name string, template_code string, access_key_id string, 
 }
 
 func (this *AliyunSms) Send(numbers string, params string) error {
+	r := rd.GetRand()
 	var request Request
 	request.Format = "JSON"
 	request.Version = "2017-05-25"
@@ -38,7 +39,7 @@ func (this *AliyunSms) Send(numbers string, params string) error {
 	request.SignatureMethod = "HMAC-SHA1"
 	request.Timestamp = time.Now().UTC().Format("2006-01-02T15:04:05Z")
 	request.SignatureVersion = "1.0"
-	request.SignatureNonce = rand.String(16, rand.RST_NUMBER|rand.RST_LOWER)
+	request.SignatureNonce = r.String(16, rand.RST_NUMBER|rand.RST_LOWER)
 
 	request.Action = "SendSms"
 	request.SignName = this.SignName
